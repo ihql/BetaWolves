@@ -1,4 +1,3 @@
-// Master DOManipulator v2 ------------------------------------------------------------
 const items = document.querySelectorAll(".item"),
   controls = document.querySelectorAll(".control"),
   headerItems = document.querySelectorAll(".item-header"),
@@ -19,9 +18,8 @@ const slider = {
     items[current].classList.add("active");
   },
   nextSlide: () => {
-    // Increment current slide and add active class
     slider.reset();
-    if (current === items.length - 1) current = -1; // Check if current slide is last in array
+    if (current === items.length - 1) current = -1;
     current++;
     controls[current].classList.add("active");
     items[current].classList.add("active");
@@ -29,7 +27,6 @@ const slider = {
     slider.transitionDelay(descriptionItems);
   },
   clickedControl: (e) => {
-    // Add active class to clicked control and corresponding slide
     slider.reset();
     clearInterval(intervalF);
 
@@ -39,26 +36,23 @@ const slider = {
     control.classList.add("active");
     items.forEach((item, index) => {
       if (index === dataIndex) {
-        // Add active class to corresponding slide
         item.classList.add("active");
       }
     });
-    current = dataIndex; // Update current slide
+    current = dataIndex;
     slider.transitionDelay(headerItems);
     slider.transitionDelay(descriptionItems);
-    intervalF = setInterval(slider.nextSlide, interval); // Fire that bad boi back up
+    intervalF = setInterval(slider.nextSlide, interval);
   },
   reset: () => {
-    // Remove active classes
     items.forEach((item) => item.classList.remove("active"));
     controls.forEach((control) => control.classList.remove("active"));
   },
   transitionDelay: (items) => {
-    // Set incrementing css transition-delay for .item-header & .item-description, .vertical-part, b elements
     let seconds;
 
     items.forEach((item) => {
-      const children = item.childNodes; // .vertical-part(s)
+      const children = item.childNodes;
       let count = 1,
         delay;
 
@@ -67,12 +61,11 @@ const slider = {
         : (seconds = 0.007);
 
       children.forEach((child) => {
-        // iterate through .vertical-part(s) and style b element
         if (child.classList) {
           item.parentNode.classList.contains("active")
             ? (delay = count * seconds + activeDelay)
             : (delay = count * seconds);
-          child.firstElementChild.style.transitionDelay = `${delay}s`; // b element
+          child.firstElementChild.style.transitionDelay = `${delay}s`;
           count++;
         }
       });
